@@ -15,8 +15,10 @@ require('dotenv').config({
   path: path.join(__dirname, envFile),
 });
 
-// destructure environment variables from process.env 
-const { DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT } = process.env;
+// destructure environment variables from process.env
+const {
+  DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT,
+} = process.env;
 
 // This asyncronous function will run before app
 const setUpDatabase = async () => {
@@ -42,7 +44,7 @@ const setUpDatabase = async () => {
   } catch (err) {
     // if something goes wrong, console.log the error and the current environment variables
     console.log(
-      `Your environment variables might be wrong. Please double check .env file`
+      'Your environment variables might be wrong. Please double check .env file',
     );
     console.log('Environment Variables are:', {
       DB_PASSWORD,

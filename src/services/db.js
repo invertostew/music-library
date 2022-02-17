@@ -8,7 +8,7 @@ module.exports = async () => {
     user: DB_USER,
     password: DB_PASSWORD,
     port: DB_PORT,
-    database: DB_NAME
+    database: DB_NAME,
   });
 
   return connection;
