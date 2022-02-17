@@ -4,9 +4,10 @@ const createArtistController = async (req, res) => {
   const db = await getDb();
 
   try {
-    await db.query(`INSERT INTO Artist (name, genre)
-      VALUES ('${req.body.name}', '${req.body.genre}')
-    `);
+    await db.query('INSERT INTO Artist (name, genre) VALUES (?, ?)', [
+      req.body.name,
+      req.body.genre
+    ]);
 
     res.status(201).json({ result: 'Created artist' });
   } catch (error) {
