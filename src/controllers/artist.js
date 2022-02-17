@@ -1,3 +1,4 @@
+const { restart } = require('nodemon');
 const getDb = require('../services/db');
 
 const getArtistsController = async (req, res) => {
@@ -31,7 +32,22 @@ const createArtistController = async (req, res) => {
   db.close();
 };
 
+const getArtistContoller = async (req, res) => {
+  const db = await getDb();
+  const { artistId } = req.params;
+  const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
+    req.params.artistId,
+  ]);
+
+  if (!artist) {
+    return res.status(404).json({ error: 'Artist ID doesnt exist' });
+  }
+
+  res.json(artist);
+};
+
 module.exports = {
   getArtistsController,
   createArtistController,
+  getArtistContoller,
 };
