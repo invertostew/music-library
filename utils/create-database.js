@@ -21,7 +21,6 @@ const { DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT } = process.env;
 // This asyncronous function will run before app
 const setUpDatabase = async () => {
   try {
-
     // connect to the database
     const db = await mysql.createConnection({
       host: DB_HOST,
@@ -32,10 +31,16 @@ const setUpDatabase = async () => {
 
     // create the database if it doesn't already exist
     await db.query(`CREATE DATABASE IF NOT EXISTS ${DB_NAME}`);
+    await db.query(`USE ${DB_NAME}`);
+    // create Artist table
+    await db.query(`CREATE TABLE IF NOT EXISTS Artist (
+      id INT PRIMARY KEY auto_increment,
+      name VARCHAR(25),
+      genre VARCHAR(25)
+    )`);
     db.close();
-
   } catch (err) {
-   // if something goes wrong, console.log the error and the current environment variables
+    // if something goes wrong, console.log the error and the current environment variables
     console.log(
       `Your environment variables might be wrong. Please double check .env file`
     );
