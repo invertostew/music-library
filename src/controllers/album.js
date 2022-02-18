@@ -20,6 +20,21 @@ const createAlbumController = async (req, res) => {
   db.close();
 };
 
+const getAlbumsController = async (_, res) => {
+  const db = await getDb();
+
+  try {
+    const [albums] = await db.query('SELECT * FROM Album');
+
+    res.json(albums);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+  db.close();
+};
+
 module.exports = {
   createAlbumController,
+  getAlbumsController,
 };
