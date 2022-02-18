@@ -8,7 +8,7 @@ const getArtistsController = async (_, res) => {
 
     res.json(artists);
   } catch (error) {
-    res.status(500).json({ error: 'No artists were found.' });
+    res.status(500).json(error);
   }
 
   db.close();
@@ -26,7 +26,7 @@ const createArtistController = async (req, res) => {
 
     res.status(201).json({ result: `Artist '${name}' was added successfully.` });
   } catch (error) {
-    res.status(500).json({ error: 'Parameters "name" and "genre" are required.' });
+    res.status(500).json(error);
   }
 
   db.close();
@@ -37,9 +37,9 @@ const getArtistContoller = async (req, res) => {
   const { artistId } = req.params;
   const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [artistId]);
 
-  (!artist)
-    ? res.status(404).json({ error: 'Artist ID doesnt exist' })
-    : res.json(artist);
+  (artist)
+    ? res.json(artist)
+    : res.status(404).json({ error: 'Artist does not exist.' });
 };
 
 const updateArtistController = async (req, res) => {
@@ -50,9 +50,9 @@ const updateArtistController = async (req, res) => {
   try {
     const [{ affectedRows }] = await db.query('UPDATE Artist SET ? WHERE id = ?', [data, artistId]);
 
-    (!affectedRows)
-      ? res.status(404).json({ error: 'Nothing was updated' })
-      : res.json({ result: 'Artist updated' });
+    (affectedRows)
+      ? res.json({ result: `Artist ${artistId} was successfully updated.` })
+      : res.status(404).json({ error: 'Please provide either "name", "genre", or both.' });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -67,9 +67,9 @@ const deleteArtistController = async (req, res) => {
   try {
     const [{ affectedRows }] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
 
-    (!affectedRows)
-      ? res.status(404).json({ error: 'Nothing was deleted' })
-      : res.json({ result: 'Artist deleted' });
+    (affectedRows)
+      ? res.json({ result: `Artist ${artistId} was successfully deleted.` })
+      : res.status(404).json({ error: 'Artist does not exist.' });
   } catch (error) {
     res.status(500).json(error);
   }
