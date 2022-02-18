@@ -34,7 +34,18 @@ const getAlbumsController = async (_, res) => {
   db.close();
 };
 
+const getAlbumController = async (req, res) => {
+  const db = await getDb();
+  const { albumId } = req.params;
+  const [[album]] = await db.query('SELECT * FROM Album WHERE id = ?', [albumId]);
+
+  (album)
+    ? res.json(album)
+    : res.status(404).json({ error: 'Album does not exist.' });
+};
+
 module.exports = {
   createAlbumController,
   getAlbumsController,
+  getAlbumController,
 };
