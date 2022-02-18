@@ -61,8 +61,29 @@ const updateArtistController = async (req, res) => {
     }
 
     res.json({ result: 'Artist updated' });
-  } catch (err) {
-    res.status(500);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+  db.close();
+};
+
+const deleteArtistController = async (req, res) => {
+  const db = await getDb();
+  const { artistId } = req.params;
+
+  try {
+    const [
+      { affectedRows },
+    ] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
+
+    if (!affectedRows) {
+      return res.status(404).json({ error: 'Nothing was deleted' });
+    }
+
+    res.json({ result: 'Artist deleted' });
+  } catch (error) {
+    res.status(500).json(error);
   }
 
   db.close();
@@ -73,4 +94,5 @@ module.exports = {
   createArtistController,
   getArtistContoller,
   updateArtistController,
+  deleteArtistController,
 };
