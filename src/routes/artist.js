@@ -10,11 +10,13 @@ const {
 
 const artistRouter = express.Router();
 
-artistRouter.get('/', getArtistsController);
-artistRouter.post('/', createArtistController);
+artistRouter.route('/')
+  .get(getArtistsController)
+  .post(createArtistController);
 
-artistRouter.get('/:artistId', getArtistContoller);
-artistRouter.patch('/:artistId', updateArtistController);
-artistRouter.delete('/:artistId', deleteArtistController);
+artistRouter.route('/:artistId')
+  .get(getArtistContoller)
+  .patch(updateArtistController)
+  .delete(deleteArtistController);
 
 module.exports = artistRouter;

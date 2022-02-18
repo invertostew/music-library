@@ -1,15 +1,14 @@
-const { restart } = require('nodemon');
 const getDb = require('../services/db');
 
-const getArtistsController = async (req, res) => {
+const getArtistsController = async (_, res) => {
   const db = await getDb();
 
   try {
     const [artists] = await db.query('SELECT * FROM Artist');
 
-    res.status(200).json(artists);
+    res.json(artists);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: 'No artists were found.' });
   }
 
   db.close();
@@ -17,16 +16,17 @@ const getArtistsController = async (req, res) => {
 
 const createArtistController = async (req, res) => {
   const db = await getDb();
+  const { name, genre } = req.body;
 
   try {
     await db.query('INSERT INTO Artist (name, genre) VALUES (?, ?)', [
-      req.body.name,
-      req.body.genre,
+      name,
+      genre,
     ]);
 
-    res.status(201).json({ result: 'Created artist' });
+    res.status(201).json({ result: `Artist '${name}' was added successfully.` });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: 'Parameters "name" and "genre" are required.' });
   }
 
   db.close();
@@ -35,15 +35,11 @@ const createArtistController = async (req, res) => {
 const getArtistContoller = async (req, res) => {
   const db = await getDb();
   const { artistId } = req.params;
-  const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
-    req.params.artistId,
-  ]);
+  const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [artistId]);
 
-  if (!artist) {
-    return res.status(404).json({ error: 'Artist ID doesnt exist' });
-  }
-
-  res.json(artist);
+  (!artist)
+    ? res.status(404).json({ error: 'Artist ID doesnt exist' })
+    : res.json(artist);
 };
 
 const updateArtistController = async (req, res) => {
@@ -52,15 +48,11 @@ const updateArtistController = async (req, res) => {
   const data = req.body;
 
   try {
-    const [
-      { affectedRows },
-    ] = await db.query('UPDATE Artist SET ? WHERE id = ?', [data, artistId]);
+    const [{ affectedRows }] = await db.query('UPDATE Artist SET ? WHERE id = ?', [data, artistId]);
 
-    if (!affectedRows) {
-      return res.status(404).json({ error: 'Nothing was updated' });
-    }
-
-    res.json({ result: 'Artist updated' });
+    (!affectedRows)
+      ? res.status(404).json({ error: 'Nothing was updated' })
+      : res.json({ result: 'Artist updated' });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -73,15 +65,11 @@ const deleteArtistController = async (req, res) => {
   const { artistId } = req.params;
 
   try {
-    const [
-      { affectedRows },
-    ] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
+    const [{ affectedRows }] = await db.query('DELETE FROM Artist WHERE id = ?', [artistId]);
 
-    if (!affectedRows) {
-      return res.status(404).json({ error: 'Nothing was deleted' });
-    }
-
-    res.json({ result: 'Artist deleted' });
+    (!affectedRows)
+      ? res.status(404).json({ error: 'Nothing was deleted' })
+      : res.json({ result: 'Artist deleted' });
   } catch (error) {
     res.status(500).json(error);
   }
