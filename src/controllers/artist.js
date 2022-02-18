@@ -46,8 +46,31 @@ const getArtistContoller = async (req, res) => {
   res.json(artist);
 };
 
+const updateArtistController = async (req, res) => {
+  const db = await getDb();
+  const { artistId } = req.params;
+  const data = req.body;
+
+  try {
+    const [
+      { affectedRows },
+    ] = await db.query('UPDATE Artist SET ? WHERE id = ?', [data, artistId]);
+
+    if (!affectedRows) {
+      return res.status(404).json({ error: 'Nothing was updated' });
+    }
+
+    res.json({ result: 'Artist updated' });
+  } catch (err) {
+    res.status(500);
+  }
+
+  db.close();
+};
+
 module.exports = {
   getArtistsController,
   createArtistController,
   getArtistContoller,
+  updateArtistController,
 };
