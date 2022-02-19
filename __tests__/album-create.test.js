@@ -34,12 +34,11 @@ describe('create artist', () => {
           artistId
         });
 
-        expect(res.status).to.equal(201);
-
         const [[albumEntries]] = await db.query(
           "SELECT * FROM Album WHERE name = 'Currents'"
         );
 
+        expect(res.status).to.equal(201);
         expect(albumEntries.name).to.equal('Currents');
         expect(albumEntries.year).to.equal(2015);
       });

@@ -70,13 +70,12 @@ describe('delete album', () => {
         const album = albums[0];
         const res = await request(app).delete(`/album/${album.id}`).send();
 
-        expect(res.status).to.equal(200);
-
         const [[deletedAlbumRecord]] = await db.query(
           'SELECT * FROM Album WHERE id = ?',
           [album.id]
         );
 
+        expect(res.status).to.equal(200);
         expect(!!deletedAlbumRecord).to.be.false;
       });
 

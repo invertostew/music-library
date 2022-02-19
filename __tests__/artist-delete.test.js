@@ -38,13 +38,12 @@ describe('delete artist', () => {
         const artist = artists[0];
         const res = await request(app).delete(`/artist/${artist.id}`).send();
 
-        expect(res.status).to.equal(200);
-
         const [[deletedArtistRecord]] = await db.query(
           'SELECT * FROM Artist WHERE id = ?',
           [artist.id]
         );
 
+        expect(res.status).to.equal(200);
         expect(!!deletedArtistRecord).to.be.false;
       });
 

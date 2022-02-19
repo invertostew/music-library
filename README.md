@@ -43,6 +43,7 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
   - DB_PORT=<YOUR_DB_PORT>
   - PORT=<YOUR_APP_PORT>
 - `npm start` to start the server.
+- `touch .env.test` or manually create a `.env.test` file in the project root with the same values as above (except you should use a different DB_NAME) if you want to run the tests using `npm test`.
 
 ## Documentation
 

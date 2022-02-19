@@ -40,13 +40,12 @@ describe('update artist', () => {
           .patch(`/artist/${artist.id}`)
           .send({ name: 'new name', genre: 'new genre' });
 
-        expect(res.status).to.equal(200);
-
         const [[newArtistRecord]] = await db.query(
           'SELECT * FROM Artist WHERE id = ?',
           [artist.id]
         );
 
+        expect(res.status).to.equal(200);
         expect(newArtistRecord.name).to.equal('new name');
       });
 
