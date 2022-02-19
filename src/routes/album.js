@@ -4,15 +4,15 @@ const {
   getAlbumsController,
   getAlbumController,
   updateAlbumController,
-  deleteAlbumController,
+  deleteAlbumController
 } = require('../controllers/album');
 
 const albumRouter = express.Router();
 
-albumRouter.route('/')
-  .get(getAlbumsController);
+albumRouter.route('/').get(getAlbumsController);
 
-albumRouter.route('/:albumId')
+albumRouter
+  .route('/:albumId')
   .get(getAlbumController)
   .patch(updateAlbumController)
   .delete(deleteAlbumController);

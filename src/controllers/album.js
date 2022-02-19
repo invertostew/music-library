@@ -6,11 +6,10 @@ const createAlbumController = async (req, res) => {
   const { name, year } = req.body;
 
   try {
-    await db.query('INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)', [
-      name,
-      year,
-      artistId,
-    ]);
+    await db.query(
+      'INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)',
+      [name, year, artistId]
+    );
 
     res.status(201).json({ result: `Album '${name}' was added successfully.` });
   } catch (error) {
@@ -37,9 +36,11 @@ const getAlbumsController = async (_, res) => {
 const getAlbumController = async (req, res) => {
   const db = await getDb();
   const { albumId } = req.params;
-  const [[album]] = await db.query('SELECT * FROM Album WHERE id = ?', [albumId]);
+  const [[album]] = await db.query('SELECT * FROM Album WHERE id = ?', [
+    albumId
+  ]);
 
-  (album)
+  album
     ? res.json(album)
     : res.status(404).json({ error: 'Album does not exist.' });
 };
@@ -50,11 +51,16 @@ const updateAlbumController = async (req, res) => {
   const data = req.body;
 
   try {
-    const [{ affectedRows }] = await db.query('UPDATE Album SET ? WHERE id = ?', [data, albumId]);
+    const [{ affectedRows }] = await db.query(
+      'UPDATE Album SET ? WHERE id = ?',
+      [data, albumId]
+    );
 
-    (affectedRows)
+    affectedRows
       ? res.json({ result: `Album ${albumId} was successfully updated.` })
-      : res.status(404).json({ error: 'Please provide either "name", "year", or both.' });
+      : res
+          .status(404)
+          .json({ error: 'Please provide either "name", "year", or both.' });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -67,9 +73,12 @@ const deleteAlbumController = async (req, res) => {
   const { albumId } = req.params;
 
   try {
-    const [{ affectedRows }] = await db.query('DELETE FROM Album WHERE id = ?', [albumId]);
+    const [{ affectedRows }] = await db.query(
+      'DELETE FROM Album WHERE id = ?',
+      [albumId]
+    );
 
-    (affectedRows)
+    affectedRows
       ? res.json({ result: `Album ${albumId} was successfully deleted.` })
       : res.status(404).json({ error: 'Album does not exist.' });
   } catch (error) {
@@ -84,5 +93,5 @@ module.exports = {
   getAlbumsController,
   getAlbumController,
   updateAlbumController,
-  deleteAlbumController,
+  deleteAlbumController
 };

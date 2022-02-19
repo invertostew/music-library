@@ -13,16 +13,16 @@ describe('read artist', () => {
     await Promise.all([
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Tame Impala',
-        'rock',
+        'rock'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Kylie Minogue',
-        'pop',
+        'pop'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Dave Brubeck',
-        'jazz',
-      ]),
+        'jazz'
+      ])
     ]);
 
     [artists] = await db.query('SELECT * from Artist');

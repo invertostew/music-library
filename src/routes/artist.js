@@ -5,24 +5,20 @@ const {
   createArtistController,
   getArtistContoller,
   updateArtistController,
-  deleteArtistController,
+  deleteArtistController
 } = require('../controllers/artist');
-const {
-  createAlbumController,
-} = require('../controllers/album');
+const { createAlbumController } = require('../controllers/album');
 
 const artistRouter = express.Router();
 
-artistRouter.route('/')
-  .get(getArtistsController)
-  .post(createArtistController);
+artistRouter.route('/').get(getArtistsController).post(createArtistController);
 
-artistRouter.route('/:artistId')
+artistRouter
+  .route('/:artistId')
   .get(getArtistContoller)
   .patch(updateArtistController)
   .delete(deleteArtistController);
 
-artistRouter.route('/:artistId/album')
-  .post(createAlbumController);
+artistRouter.route('/:artistId/album').post(createAlbumController);
 
 module.exports = artistRouter;

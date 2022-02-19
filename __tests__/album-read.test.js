@@ -14,38 +14,46 @@ describe('read album', () => {
     await Promise.all([
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Radiohead',
-        'rock',
+        'rock'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Gorillaz',
-        'pop',
+        'pop'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Red Hot Chili Peppers',
-        'rock',
-      ]),
+        'rock'
+      ])
     ]);
 
-    const [[radiohead]] = await db.query('SELECT id FROM Artist WHERE name = ?', ['Radiohead']);
-    const [[gorillaz]] = await db.query('SELECT id FROM Artist WHERE name = ?', ['Gorillaz']);
-    const [[rhcp]] = await db.query('SELECT id FROM Artist WHERE name = ?', ['Red Hot Chili Peppers']);
+    const [[radiohead]] = await db.query(
+      'SELECT id FROM Artist WHERE name = ?',
+      ['Radiohead']
+    );
+    const [[gorillaz]] = await db.query(
+      'SELECT id FROM Artist WHERE name = ?',
+      ['Gorillaz']
+    );
+    const [[rhcp]] = await db.query('SELECT id FROM Artist WHERE name = ?', [
+      'Red Hot Chili Peppers'
+    ]);
 
     await Promise.all([
       db.query('INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)', [
         'OK Computer',
         1997,
-        radiohead.id,
+        radiohead.id
       ]),
       db.query('INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)', [
         'Plastic Beach',
         2010,
-        gorillaz.id,
+        gorillaz.id
       ]),
       db.query('INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)', [
         'Californication',
         1999,
-        rhcp.id,
-      ]),
+        rhcp.id
+      ])
     ]);
 
     [albums] = await db.query('SELECT * from Album');

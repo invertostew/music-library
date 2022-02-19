@@ -12,7 +12,7 @@ describe('create artist', () => {
 
     await db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
       'Tame Impala',
-      'rock',
+      'rock'
     ]);
 
     [[artist]] = await db.query('SELECT * FROM Artist');
@@ -31,13 +31,13 @@ describe('create artist', () => {
         const res = await request(app).post(`/artist/${artistId}/album`).send({
           name: 'Currents',
           year: 2015,
-          artistId,
+          artistId
         });
 
         expect(res.status).to.equal(201);
 
         const [[albumEntries]] = await db.query(
-          'SELECT * FROM Album WHERE name = \'Currents\'',
+          "SELECT * FROM Album WHERE name = 'Currents'"
         );
 
         expect(albumEntries.name).to.equal('Currents');

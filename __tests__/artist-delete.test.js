@@ -12,16 +12,16 @@ describe('delete artist', () => {
     await Promise.all([
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Tame Impala',
-        'rock',
+        'rock'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Kylie Minogue',
-        'pop',
+        'pop'
       ]),
       db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
         'Dave Brubeck',
-        'jazz',
-      ]),
+        'jazz'
+      ])
     ]);
 
     [artists] = await db.query('SELECT * from Artist');
@@ -40,9 +40,10 @@ describe('delete artist', () => {
 
         expect(res.status).to.equal(200);
 
-        const [
-          [deletedArtistRecord],
-        ] = await db.query('SELECT * FROM Artist WHERE id = ?', [artist.id]);
+        const [[deletedArtistRecord]] = await db.query(
+          'SELECT * FROM Artist WHERE id = ?',
+          [artist.id]
+        );
 
         expect(!!deletedArtistRecord).to.be.false;
       });
