@@ -69,7 +69,7 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
 
 ## Testing
 
-Built using a TDD approach. Tests are focused on end-to-end testing. Each route/controller was first written as a failing test, which was then built out as per the tests, and later refactored and tested again.
+Built using a TDD approach. Tests are focused on integration testing. Each route/controller was first written as a failing test, which was then built out as per the tests, and later refactored and tested again.
 
 All tests are located inside of the `__tests__` directory.
 
