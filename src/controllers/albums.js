@@ -7,7 +7,7 @@ const createAlbumController = async (req, res) => {
 
   try {
     await db.query(
-      'INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)',
+      'INSERT INTO albums (name, year, artist_id) VALUES (?, ?, ?)',
       [name, year, artistId]
     );
 
@@ -23,7 +23,7 @@ const getAlbumsController = async (_, res) => {
   const db = await getDb();
 
   try {
-    const [albums] = await db.query('SELECT * FROM Album');
+    const [albums] = await db.query('SELECT * FROM albums');
 
     res.json(albums);
   } catch (error) {
@@ -36,7 +36,7 @@ const getAlbumsController = async (_, res) => {
 const getAlbumController = async (req, res) => {
   const db = await getDb();
   const { albumId } = req.params;
-  const [[album]] = await db.query('SELECT * FROM Album WHERE id = ?', [
+  const [[album]] = await db.query('SELECT * FROM albums WHERE id = ?', [
     albumId
   ]);
 
@@ -52,7 +52,7 @@ const updateAlbumController = async (req, res) => {
 
   try {
     const [{ affectedRows }] = await db.query(
-      'UPDATE Album SET ? WHERE id = ?',
+      'UPDATE albums SET ? WHERE id = ?',
       [data, albumId]
     );
 
@@ -74,7 +74,7 @@ const deleteAlbumController = async (req, res) => {
 
   try {
     const [{ affectedRows }] = await db.query(
-      'DELETE FROM Album WHERE id = ?',
+      'DELETE FROM albums WHERE id = ?',
       [albumId]
     );
 

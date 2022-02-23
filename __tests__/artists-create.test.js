@@ -9,20 +9,20 @@ describe('create artist', () => {
   beforeEach(async () => (db = await getDb()));
 
   afterEach(async () => {
-    await db.query('DELETE FROM Artist');
+    await db.query('DELETE FROM artists');
     await db.close();
   });
 
-  describe('/artist', () => {
+  describe('/artists', () => {
     describe('POST', () => {
       it('creates a new artist in the database', async () => {
-        const res = await request(app).post('/artist').send({
+        const res = await request(app).post('/artists').send({
           name: 'Tame Impala',
           genre: 'rock'
         });
 
         const [[artistEntries]] = await db.query(
-          "SELECT * FROM Artist WHERE name = 'Tame Impala'"
+          "SELECT * FROM artists WHERE name = 'Tame Impala'"
         );
 
         expect(res.status).to.equal(201);

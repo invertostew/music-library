@@ -36,11 +36,11 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
 - `npm install` to install dependencies.
 - `touch .env` or manually create a `.env` file in the project root.
   - add the following:
-  - DB_PASSWORD=<YOUR_PASSWORD>
-  - DB_NAME=<YOUR_DB_NAME>
-  - DB_USER=<YOUR_DB_USER>
   - DB_HOST=<YOUR_DB_HOST>
+  - DB_USER=<YOUR_DB_USER>
+  - DB_PASSWORD=<YOUR_PASSWORD>
   - DB_PORT=<YOUR_DB_PORT>
+  - DB_NAME=<YOUR_DB_NAME>
   - PORT=<YOUR_APP_PORT>
 - `npm start` to start the server.
 - `touch .env.test` or manually create a `.env.test` file in the project root with the same values as above (except you should use a different DB_NAME) if you want to run the tests using `npm test`.
@@ -49,23 +49,23 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
 
 ### Artists
 
-| HTTP Verb | Route                   | Example Request Body                                    |
-| --------- | ----------------------- | ------------------------------------------------------- |
-| GET       | /artist                 | N/A                                                     |
-| GET       | /artist/:artistId       | N/A                                                     |
-| POST      | /artist                 | {"name": "Some Artist", "genre": "Some Genre"}          |
-| PATCH     | /artist/:artistId       | {"name": "Updated Artist"} (options: name, genre)       |
-| DELETE    | /artist/:artistId       | N/A                                                     |
-| POST      | /artist/:artistId/album | {"name": "Some Album", "year": "2022", "artistId": "1"} |
+| HTTP Verb | Route                     | Example Request Body                                    |
+| --------- | ------------------------- | ------------------------------------------------------- |
+| GET       | /artists                  | N/A                                                     |
+| GET       | /artists/:artistId        | N/A                                                     |
+| POST      | /artists                  | {"name": "Some Artist", "genre": "Some Genre"}          |
+| PATCH     | /artists/:artistId        | {"name": "Updated Artist"} (options: name, genre)       |
+| DELETE    | /artists/:artistId        | N/A                                                     |
+| POST      | /artists/:artistId/albums | {"name": "Some Album", "year": "2022", "artistId": "1"} |
 
 ### Albums
 
-| HTTP Verb | Route           | Example Request Body                                      |
-| --------- | --------------- | --------------------------------------------------------- |
-| GET       | /album          | N/A                                                       |
-| GET       | /album/:albumId | N/A                                                       |
-| PATCH     | /album/:albumId | {"name": "Updated Album"} (options: name, year, artistId) |
-| DELETE    | /album/:albumId | N/A                                                       |
+| HTTP Verb | Route            | Example Request Body                                      |
+| --------- | ---------------- | --------------------------------------------------------- |
+| GET       | /albums          | N/A                                                       |
+| GET       | /albums/:albumId | N/A                                                       |
+| PATCH     | /albums/:albumId | {"name": "Updated Album"} (options: name, year, artistId) |
+| DELETE    | /albums/:albumId | N/A                                                       |
 
 ## Testing
 

@@ -1,25 +1,11 @@
 const getDb = require('../services/db');
 
-const getArtistsController = async (_, res) => {
-  const db = await getDb();
-
-  try {
-    const [artists] = await db.query('SELECT * FROM Artist');
-
-    res.json(artists);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-
-  db.close();
-};
-
 const createArtistController = async (req, res) => {
   const db = await getDb();
   const { name, genre } = req.body;
 
   try {
-    await db.query('INSERT INTO Artist (name, genre) VALUES (?, ?)', [
+    await db.query('INSERT INTO artists (name, genre) VALUES (?, ?)', [
       name,
       genre
     ]);
@@ -34,10 +20,24 @@ const createArtistController = async (req, res) => {
   db.close();
 };
 
+const getArtistsController = async (_, res) => {
+  const db = await getDb();
+
+  try {
+    const [artists] = await db.query('SELECT * FROM artists');
+
+    res.json(artists);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+
+  db.close();
+};
+
 const getArtistContoller = async (req, res) => {
   const db = await getDb();
   const { artistId } = req.params;
-  const [[artist]] = await db.query('SELECT * FROM Artist WHERE id = ?', [
+  const [[artist]] = await db.query('SELECT * FROM artists WHERE id = ?', [
     artistId
   ]);
 
@@ -53,7 +53,7 @@ const updateArtistController = async (req, res) => {
 
   try {
     const [{ affectedRows }] = await db.query(
-      'UPDATE Artist SET ? WHERE id = ?',
+      'UPDATE artists SET ? WHERE id = ?',
       [data, artistId]
     );
 
@@ -75,7 +75,7 @@ const deleteArtistController = async (req, res) => {
 
   try {
     const [{ affectedRows }] = await db.query(
-      'DELETE FROM Artist WHERE id = ?',
+      'DELETE FROM artists WHERE id = ?',
       [artistId]
     );
 
@@ -90,8 +90,8 @@ const deleteArtistController = async (req, res) => {
 };
 
 module.exports = {
-  getArtistsController,
   createArtistController,
+  getArtistsController,
   getArtistContoller,
   updateArtistController,
   deleteArtistController

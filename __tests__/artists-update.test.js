@@ -10,38 +10,38 @@ describe('update artist', () => {
   beforeEach(async () => {
     db = await getDb();
     await Promise.all([
-      db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
+      db.query('INSERT INTO artists (name, genre) VALUES(?, ?)', [
         'Tame Impala',
         'rock'
       ]),
-      db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
+      db.query('INSERT INTO artists (name, genre) VALUES(?, ?)', [
         'Kylie Minogue',
         'pop'
       ]),
-      db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
+      db.query('INSERT INTO artists (name, genre) VALUES(?, ?)', [
         'Dave Brubeck',
         'jazz'
       ])
     ]);
 
-    [artists] = await db.query('SELECT * FROM Artist');
+    [artists] = await db.query('SELECT * FROM artists');
   });
 
   afterEach(async () => {
-    await db.query('DELETE FROM Artist');
+    await db.query('DELETE FROM artists');
     await db.close();
   });
 
-  describe('/artist/:artistId', () => {
+  describe('/artists/:artistId', () => {
     describe('PATCH', () => {
       it('updates a single artist with the correct id', async () => {
         const artist = artists[0];
         const res = await request(app)
-          .patch(`/artist/${artist.id}`)
+          .patch(`/artists/${artist.id}`)
           .send({ name: 'new name', genre: 'new genre' });
 
         const [[newArtistRecord]] = await db.query(
-          'SELECT * FROM Artist WHERE id = ?',
+          'SELECT * FROM artists WHERE id = ?',
           [artist.id]
         );
 
@@ -51,7 +51,7 @@ describe('update artist', () => {
 
       it('returns a 404 if the artist is not in the database', async () => {
         const res = await request(app)
-          .patch('/artist/999999')
+          .patch('/artists/999999')
           .send({ name: 'new name' });
 
         expect(res.status).to.equal(404);
