@@ -12,7 +12,7 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
 
 ## Requirements
 
-- [Node JS](https://nodejs.org/en/) - to start the server.
+- [Node JS](https://nodejs.org/en/) - to run the application.
 
 ### Application Dependencies
 
