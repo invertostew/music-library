@@ -49,23 +49,23 @@ Use RESTful routes to perform CRUD operations to store and manage your favourite
 
 ### Artists
 
-| HTTP Verb | Route                     | Example Request Body                                    |
-| --------- | ------------------------- | ------------------------------------------------------- |
-| GET       | /artists                  | N/A                                                     |
-| GET       | /artists/:artistId        | N/A                                                     |
-| POST      | /artists                  | {"name": "Some Artist", "genre": "Some Genre"}          |
-| PATCH     | /artists/:artistId        | {"name": "Updated Artist"} (options: name, genre)       |
-| DELETE    | /artists/:artistId        | N/A                                                     |
-| POST      | /artists/:artistId/albums | {"name": "Some Album", "year": "2022", "artistId": "1"} |
+| HTTP Verb | Route                     | Example Request Body                                     |
+| --------- | ------------------------- | -------------------------------------------------------- |
+| GET       | /artists                  | N/A                                                      |
+| GET       | /artists/:artistId        | N/A                                                      |
+| POST      | /artists                  | {"name": "Some Artist", "genre": "Some Genre"}           |
+| PATCH     | /artists/:artistId        | {"name": "Updated Artist"} (options: name, genre)        |
+| DELETE    | /artists/:artistId        | N/A                                                      |
+| POST      | /artists/:artistId/albums | {"name": "Some Album", "year": "2022", "artist_id": "1"} |
 
 ### Albums
 
-| HTTP Verb | Route            | Example Request Body                                      |
-| --------- | ---------------- | --------------------------------------------------------- |
-| GET       | /albums          | N/A                                                       |
-| GET       | /albums/:albumId | N/A                                                       |
-| PATCH     | /albums/:albumId | {"name": "Updated Album"} (options: name, year, artistId) |
-| DELETE    | /albums/:albumId | N/A                                                       |
+| HTTP Verb | Route            | Example Request Body                                       |
+| --------- | ---------------- | ---------------------------------------------------------- |
+| GET       | /albums          | N/A                                                        |
+| GET       | /albums/:albumId | N/A                                                        |
+| PATCH     | /albums/:albumId | {"name": "Updated Album"} (options: name, year, artist_id) |
+| DELETE    | /albums/:albumId | N/A                                                        |
 
 ## Testing
 
